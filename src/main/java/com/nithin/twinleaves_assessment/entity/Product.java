@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +18,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "products")
@@ -31,15 +34,16 @@ public class Product {
 	    private String productName;
 	    
 	    @Column(name = "created_on", nullable = false)
+	    @CreationTimestamp
 	    private LocalDate createdOn;
 	    
-//	    @ManyToMany
-//	    @JoinTable(
-//	        name = "batch_products",
-//	        joinColumns = @JoinColumn(name = "product_id"),
-//	        inverseJoinColumns = @JoinColumn(name = "batch_id")
-//	    )
-//	    private List<Batch> batches = new ArrayList<>();
+	    @ManyToMany
+	    @JoinTable(
+	        name = "batch_products",
+	        joinColumns = @JoinColumn(name = "product_id"),
+	        inverseJoinColumns = @JoinColumn(name = "batch_id")
+	    )
+	    private List<Batch> batches = new ArrayList<>();
 	    
 	    @OneToMany(mappedBy = "product")
 	    private List<Gtin> gtins = new ArrayList<>();

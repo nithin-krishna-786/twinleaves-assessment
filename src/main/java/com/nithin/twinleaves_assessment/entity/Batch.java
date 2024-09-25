@@ -41,10 +41,14 @@ public class Batch {
 	private LocalDate inwardedOn;
 
 	@ManyToMany
-	@JoinTable(name = "batch_products"
-	,joinColumns = @JoinColumn(name = "batch_id")
-	, inverseJoinColumns = @JoinColumn(name = "product_id"))
+	@JoinTable(name = "batch_products",
+	 joinColumns = @JoinColumn(name = "batch_id"),
+	 inverseJoinColumns = @JoinColumn(name = "product_id"))
 	private List<Product> products = new ArrayList<>();
+	
+	public void setProducts(List<Product> products) {
+	    this.products = products;
+	    availableQuantity = products != null ? products.size() : 0;
+	}
 
-	// Getters and Setters
 }
