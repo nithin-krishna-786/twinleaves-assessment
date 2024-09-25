@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class BatchDTO {
-    private Long batchId;
+    private Long id;
     
     @NotNull(message = "MRP cannot be null")
     private Integer mrp;

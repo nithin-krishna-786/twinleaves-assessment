@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nithin.twinleaves_assessment.dto.BatchDTO;
+import com.nithin.twinleaves_assessment.dto.BatchRequestDTO;
 import com.nithin.twinleaves_assessment.dto.ProductDTO;
 import com.nithin.twinleaves_assessment.entity.Batch;
 import com.nithin.twinleaves_assessment.entity.Product;
@@ -28,27 +29,27 @@ public class BatchService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public BatchDTO createBatch(BatchDTO batchDTO) {
+	public BatchDTO createBatch(BatchRequestDTO batchDTO) {
 		Batch batch = modelMapper.map(batchDTO, Batch.class);
+		List<Long> productIDsInBatch = batchDTO.getProductIds();
 		
 		List<Product> productsInBatch = new ArrayList<Product>();
 		
-		List<ProductDTO> productDTOsInBatch = batchDTO.getProducts();
 
-		for(ProductDTO p:productDTOsInBatch) {
-			Long productId = p.getProductId();
-			Optional<Product> product = productRepository.findById(productId);
+		for(Long id:productIDsInBatch) {
+//			Long productId = p.getId();
+			Optional<Product> product = productRepository.findById(id);
 			
 			if(product.isPresent())
-				productsInBatch.add(product.get());
+//				productsInBatch.add(product.get());
+				batch.getProducts().add(product.get());
 			else
-				throw new ResourceNotFoundException("Product Not found with given id");
+				throw new ResourceNotFoundException("Product Not found with given id" + id);
 		}
 				
-		batch.setProducts(productsInBatch);
 		
 		batch = batchRepository.save(batch);
-		batchDTO = modelMapper.map(batch, BatchDTO.class);
-		return batchDTO;
+		BatchDTO result = modelMapper.map(batch, BatchDTO.class);
+		return result;
 	}
 }

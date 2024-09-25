@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class ProductDTO {
 	
-	private Long productId;
+	private Long id;
 
 	@NotNull(message = "Product name cannot be null")
 	@Size(min = 1, max = 100, message = "Product name must be between 1 and 100 characters")
@@ -20,5 +20,4 @@ public class ProductDTO {
 
 	private List<BatchDTO> batches;
 
-	private List<GtinDTO> gtins;
 }

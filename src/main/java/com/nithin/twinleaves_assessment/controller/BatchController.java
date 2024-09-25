@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nithin.twinleaves_assessment.dto.BatchDTO;
+import com.nithin.twinleaves_assessment.dto.BatchRequestDTO;
 import com.nithin.twinleaves_assessment.service.BatchService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/batch")
@@ -18,7 +21,7 @@ public class BatchController {
 	private BatchService batchService;
 	
 	@PostMapping
-	public ResponseEntity<BatchDTO> createBatch(@RequestBody BatchDTO batchDTO) {
+	public ResponseEntity<BatchDTO> createBatch(@RequestBody @Valid BatchRequestDTO batchDTO) {
 	    BatchDTO createdBatchDTO = batchService.createBatch(batchDTO);
 	    return ResponseEntity.ok(createdBatchDTO);
 	}
