@@ -1,6 +1,7 @@
 package com.nithin.twinleaves_assessment.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -54,7 +55,7 @@ public class ProductService {
     }
     
     public List<GtinDTO> getGtins(String gtin) {
-        List<Gtin> gtins = gtinRepository.findByGtin(gtin);
+        Optional<Gtin> gtins = gtinRepository.findByGtin(gtin);
         
         if(gtins == null)
         	throw new ResourceAccessException("Not a valid GTIN");
@@ -66,17 +67,4 @@ public class ProductService {
         return gtinDTOS;
     }
 
-    public List<BatchDTO> getBatchesWithPositiveQuantity() {
-        List<Batch> batches = batchRepository.findByAvailableQuantityGreaterThan(0);
-        List<BatchDTO> batchDTOS = batches.stream()
-                .map(batch -> modelMapper.map(batch, BatchDTO.class))
-                .collect(Collectors.toList());
-        return batchDTOS;
-    }
-
-    public BatchDTO getLatestBatchWithNegativeOrZeroQuantity() {
-        Batch batch = batchRepository.findTopByAvailableQuantityLessThanEqualOrderByInwardedOnDesc(0);
-        BatchDTO batchDTO = modelMapper.map(batch, BatchDTO.class);
-        return batchDTO;
-    }
 }

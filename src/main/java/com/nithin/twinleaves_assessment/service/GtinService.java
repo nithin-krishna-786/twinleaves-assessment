@@ -54,4 +54,19 @@ public class GtinService {
 		return gtinDTO;
 	}
 
+	public GtinDTO fetchGTIN(String gtin) {
+		Optional<Gtin> result = gtinRepository.findByGtin(gtin);
+		
+		if(result.isPresent())
+		{
+			Gtin res = result.get();
+			GtinDTO gtinDTO = new GtinDTO();
+			gtinDTO.setId(res.getId());
+			gtinDTO.setGtin(res.getGtin());
+			return gtinDTO;
+		}
+		else
+			throw new ResourceNotFoundException("No gtin found");
+	}
+
 }

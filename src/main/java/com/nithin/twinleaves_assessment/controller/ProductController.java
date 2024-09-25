@@ -38,16 +38,6 @@ public class ProductController {
         return new ResponseEntity<>(gtinDTOS, HttpStatus.OK);
     }
     
-    @GetMapping("/batches/available")
-    public ResponseEntity<List<BatchDTO>> getBatchesWithPositiveQuantity() {
-        List<BatchDTO> batchDTOS = productService.getBatchesWithPositiveQuantity();
-        return new ResponseEntity<>(batchDTOS, HttpStatus.OK);
-    }
-    
-    @GetMapping("/batches/latest")
-    public ResponseEntity<BatchDTO> getLatestBatchWithNegativeOrZeroQuantity() {
-        BatchDTO batchDTO = productService.getLatestBatchWithNegativeOrZeroQuantity();
-        return new ResponseEntity<>(batchDTO, HttpStatus.OK);
-    }
+  
 
 }
