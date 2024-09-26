@@ -62,9 +62,11 @@ public class BatchService {
 	}
 
 	public BatchDTO getLatestBatchWithNegativeOrZeroQuantity() {
-		Batch batch = batchRepository.findTopByAvailableQuantityLessThanEqualOrderByInwardedOnDesc(0);
-		BatchDTO batchDTO = modelMapper.map(batch, BatchDTO.class);
-		return batchDTO;
+		Optional<Batch> batch = batchRepository.findTopByAvailableQuantityLessThanEqualOrderByInwardedOnDesc(0);
+		if(batch.isPresent())
+			return modelMapper.map(batch.get(), BatchDTO.class);
+		else
+			throw new ResourceNotFoundException("No batch with given criteria");
 	}
 
 }
