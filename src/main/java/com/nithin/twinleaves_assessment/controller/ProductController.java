@@ -32,12 +32,5 @@ public class ProductController {
 		return new ResponseEntity<>(createdProductDTO, HttpStatus.CREATED);
 	}
 	
-    @GetMapping("/gtins")
-    public ResponseEntity<List<GtinDTO>> getGtins(@RequestParam(required = false) String gtin) {
-        List<GtinDTO> gtinDTOS = productService.getGtins(gtin);
-        return new ResponseEntity<>(gtinDTOS, HttpStatus.OK);
-    }
-    
-  
 
 }

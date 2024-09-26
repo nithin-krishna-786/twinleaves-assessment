@@ -54,17 +54,5 @@ public class ProductService {
         return productDTO;
     }
     
-    public List<GtinDTO> getGtins(String gtin) {
-        Optional<Gtin> gtins = gtinRepository.findByGtin(gtin);
-        
-        if(gtins == null)
-        	throw new ResourceAccessException("Not a valid GTIN");
-        
-        List<GtinDTO> gtinDTOS = gtins.stream()
-                .map(g -> modelMapper.map(g, GtinDTO.class))
-                .collect(Collectors.toList());
-        
-        return gtinDTOS;
-    }
 
 }
